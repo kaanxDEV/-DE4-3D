@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>İDE4 3D | Yönetim Paneli</title>
+    <link rel="stylesheet" href="css/admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="admin-container">
+        <!-- Sol Dashboard Sidebar -->
+        <aside class="admin-sidebar">
+            <h2>İDE4 Yönetim</h2>
+            <nav class="admin-nav">
+                <a href="#stats" class="active"><i class="fas fa-chart-line"></i> Genel Durum</a>
+                <a href="#add-product"><i class="fas fa-plus-circle"></i> Yeni Ürün Ekle</a>
+                <a href="#product-list-section"><i class="fas fa-boxes"></i> Ürün Yönetimi</a>
+            </nav>
+        </aside>
+
+        <!-- Sağ Ana İçerik -->
+        <main class="admin-main">
+            <header class="admin-header">
+                <h1>Mağaza Durumu & Yönetimi (Çift Fotoğraf Destekli)</h1>
+            </header>
+
+            <!-- İstatistik Kartları -->
+            <section id="stats" class="metrics-grid">
+                <div class="card metric">
+                    <i class="fas fa-lira-sign icon-box teal"></i>
+                    <div>
+                        <h3 id="stat-earnings">Aktif</h3>
+                        <p>Sipariş Sistemi (Local)</p>
+                    </div>
+                </div>
+                <div class="card metric">
+                    <i class="fas fa-shopping-bag icon-box orange"></i>
+                    <div>
+                        <h3 id="stat-orders">Aktif</h3>
+                        <p>WhatsApp Ayrıştırma</p>
+                    </div>
+                </div>
+                <div class="card metric">
+                    <i class="fas fa-cubes icon-box blue"></i>
+                    <div>
+                        <h3 id="stat-products">0</h3>
+                        <p>Kayıtlı Ürün Sayısı</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Ürün Ekleme Formu -->
+            <section id="add-product" class="card form-section">
+                <h2><i class="fas fa-plus"></i> Ürün Ekleme / Fiyat Değiştirme</h2>
+					<form id="product-form">
+                    <div class="form-group">
+                        <label>Ürün Adı</label>
+                        <input type="text" id="prod-name" placeholder="Örn: 3D Araba Aksesuarı" required>
+                    </div>
+                    <div style="display: flex; gap: 1rem;">
+                        <div class="form-group" style="flex: 1;">
+                            <label style="color: #991B1B; font-weight: bold;">Standart Kalite Fiyatı (TL)</label>
+                            <input type="number" id="prod-price-low" placeholder="Örn: 100" required>
+                        </div>
+                        <div class="form-group" style="flex: 1;">
+                            <label style="color: #12224A; font-weight: bold;">Yüksek Kalite Fiyatı (TL)</label>
+                            <input type="number" id="prod-price-high" placeholder="Örn: 150" required>
+                        </div>
+                    </div>
+                    <div class="form-group" style="background: rgba(0, 174, 239, 0.1); padding: 12px; border-radius: 8px; margin-bottom: 15px;">
+                        <label style="color: #12224A; font-weight: bold;"><i class="fas fa-gem"></i> 1. Fotoğraf: İDE4 Yüksek Kalite (0.12mm)</label>
+                        <input type="file" id="prod-img-high" accept="image/png, image/jpeg, image/webp" required>
+                    </div>
+                    <div class="form-group" style="background: rgba(242, 101, 34, 0.1); padding: 12px; border-radius: 8px; margin-bottom: 15px;">
+                        <label style="color: #b43d00; font-weight: bold;"><i class="fas fa-history"></i> 2. Fotoğraf: Standart Düşük Kalite (0.28mm - Karşılaştırma İçin)</label>
+                        <input type="file" id="prod-img-low" accept="image/png, image/jpeg, image/webp" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Kategori</label>
+                        <select id="prod-category">
+                            <option value="Dekoratif">Dekoratif Ürünler</option>
+                            <option value="Kurumsal">Kurumsal / Promosyon</option>
+                            <option value="Genel">Genel Üretim</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn-submit">Sisteme Kaydet</button>
+                </form>
+            </section>
+
+            <!-- Ürün Listesi Tablosu -->
+            <section id="product-list-section" class="card table-section">
+                <h2><i class="fas fa-list"></i> Mevcut Ürün Listesi</h2>
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Görsel (Yüksek)</th>
+                                <th>Ürün Adı</th>
+                                <th>Kategori</th>
+                                <th>Fiyat</th>
+                                <th>İşlemler</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-product-table">
+                            <!-- JS verisi yüklenecek -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
+    
+    <script src="js/admin.js"></script>
+</body>
+</html>

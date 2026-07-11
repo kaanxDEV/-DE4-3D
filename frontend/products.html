@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Katalog & Sipariş | İDE4 3D</title>
+    <!-- SEO -->
+    <meta name="description" content="İDE4 3D ürün kataloğu. 3D Litofanlar, kurumsal anahtarlıklar, figürler ve özel tasarım prototipler.">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="page-products">
+    <!-- Preloader -->
+    <div id="preloader"><div class="spinner"></div></div>
+
+    <!-- Navigasyon (Sabit Sol Menü) -->
+    <nav class="sidebar fade-in-left">
+        <div class="logo-container">
+            <img src="assets/370.jpg" alt="İDE4 3D Logo" class="nav-logo">
+        </div>
+        <div class="hamburger" id="hamburger-menu"><i class="fas fa-bars"></i></div>
+        <ul class="nav-links" id="nav-links">
+            <li><a href="index.html"><i class="fas fa-home"></i> Ana Sayfa</a></li>
+            <li><a href="products.html" style="color: var(--accent-orange);"><i class="fas fa-cube"></i> Ürünlerimiz</a></li>
+            <li><a href="#cart" id="cart-btn"><i class="fas fa-shopping-cart"></i> Sepetim (<span id="cart-count">0</span>)</a></li>
+        </ul>
+        <div class="qr-container">
+            <p>Hızlı İletişim</p>
+            <img src="assets/3998.jpg" alt="WhatsApp QR" class="qr-code">
+        </div>
+    </nav>
+
+    <!-- ANA İÇERİK KAPSAYICISI -->
+    <main class="main-content fade-in-bottom">
+        
+        <!-- Ürün Kataloğu Modülü -->
+        <section id="products">
+            <h2 class="section-title">Katalog & Sipariş Modülü</h2>
+            
+            <!-- Dinamik Kategori Filtreleri -->
+            <div class="filter-container">
+                <button class="filter-btn active" data-filter="all">Tüm Ürünler</button>
+                <button class="filter-btn" data-filter="Dekoratif">Dekoratif</button>
+                <button class="filter-btn" data-filter="Kurumsal">Kurumsal</button>
+                <button class="filter-btn" data-filter="Genel">Genel Üretim</button>
+            </div>
+
+            <div class="product-grid" id="product-list">
+                <!-- JavaScript verisi dinamik olarak yüklenecek -->
+            </div>
+        </section>
+
+        <!-- Litofan Seçim Modalı -->
+        <div id="litofan-modal" class="modal hidden">
+            <div class="modal-content" style="text-align: center;">
+                <h2>Litofan Tasarım Seçimi</h2>
+                <div id="litofan-step-1">
+                    <p style="margin-bottom: 1.5rem; color: var(--text-main);">Litofan modelinizi nasıl hazırlamak istersiniz?</p>
+                    <button id="lito-option-1" class="btn-primary" style="margin-bottom: 1rem;"><i class="fas fa-camera"></i> Fotoğraf Göndereceğim (Siz Tasarlayın)</button>
+                    <button id="lito-option-2" class="btn-secondary" style="border: 2px solid var(--primary-blue); color: var(--primary-blue);"><i class="fas fa-laptop-code"></i> Kendi Modelimi Tasarlayacağım</button>
+                </div>
+                <div id="litofan-step-2" class="hidden">
+                    <i class="fas fa-exclamation-triangle" style="font-size: 3rem; color: #F59E0B; margin-bottom: 1rem;"></i>
+                    <h3 style="color: #D97706; margin-bottom: 1rem;">Önemli Uyarı</h3>
+                    <p style="margin-bottom: 1.5rem; color: var(--text-main);">Kendi modelinizi oluşturacağınız sistem <strong>yalnızca bilgisayar</strong> kullanımı için uygundur. Devam etmek istiyor musunuz?</p>
+                    <button id="lito-confirm-btn" class="btn-primary" style="background: #F59E0B; margin-bottom: 1rem;">Evet, Bilgisayardayım (Devam Et)</button>
+                    <button id="lito-back-btn" class="btn-secondary">Geri Dön</button>
+                </div>
+                <button id="close-litofan-modal" style="margin-top: 1.5rem; background: none; border: none; color: #ef4444; cursor: pointer; text-decoration: underline;">İptal</button>
+            </div>
+        </div>
+
+        <!-- Dinamik Ürün Karşılaştırma ve Kalite Seçim Modalı -->
+        <div id="dynamic-compare-modal" class="modal hidden">
+            <div class="modal-content" style="max-width: 800px; text-align: center;">
+                <h2 id="cmp-prod-title">Ürün Kalite Karşılaştırması</h2>
+                <p style="color: var(--text-muted); margin-bottom: 1.5rem;">Sürgüyü kaydırarak yüzey kalitesini inceleyin ve istediğiniz üretim standartını seçerek sepete ekleyin.</p>
+                
+                <!-- Sürgü Alanı -->
+                <div class="compare-container" id="dyn-compare-container" style="height: 350px; margin-bottom: 1.5rem;">
+                    <img src="" class="img-after" id="dyn-img-high" alt="Yüksek Kalite">
+                    <span class="compare-label label-after">İDE4 Yüksek Kalite (0.12mm)</span>
+                    
+                    <div class="img-before-wrapper" id="dyn-img-wrapper">
+                        <img src="" class="img-before" id="dyn-img-low" alt="Standart Kalite">
+                    </div>
+                    <span class="compare-label label-before">Standart Baskı (0.28mm)</span>
+
+                    <input type="range" min="0" max="100" value="50" class="compare-slider" id="dyn-compare-slider">
+                    <div class="slider-line" id="dyn-slider-line"></div>
+                    <div class="slider-button" id="dyn-slider-button"><i class="fas fa-arrows-alt-h"></i></div>
+                </div>
+
+                <!-- Seçimli Sipariş Butonları -->
+                <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                    <button id="btn-choose-low" class="btn-secondary" style="border: 2px solid #ef4444; color: #ef4444; font-weight: bold; flex: 1; min-width: 250px;">
+                        <i class="fas fa-box"></i> Standart Kalite ile Ekle (<span id="price-low-display">0</span> TL)
+                    </button>
+                    <button id="btn-choose-high" class="btn-primary" style="background: var(--primary-blue); flex: 1; min-width: 250px;">
+                        <i class="fas fa-gem"></i> Yüksek Kalite ile Ekle (<span id="price-high-display">0</span> TL)
+                    </button>
+                </div>
+                <button id="close-dyn-compare-modal" style="margin-top: 1.5rem; background: none; border: none; color: #64748B; cursor: pointer; text-decoration: underline;">Kapat</button>
+            </div>
+        </div>
+
+        <!-- Sepet Sistemi Modalı -->
+        <div id="cart-modal" class="modal hidden">
+            <div class="modal-content">
+                <h2>Sipariş Özeti</h2>
+                <ul id="cart-items"></ul>
+                <div class="total-container">
+                    <h3>Toplam Tutar: <span id="total-price">0</span> TL</h3>
+                </div>
+                <button id="checkout-btn" class="btn-primary"><i class="fab fa-whatsapp"></i> Siparişi Tamamla (WhatsApp)</button>
+                <button id="close-modal" class="btn-secondary">Alışverişe Devam Et</button>
+            </div>
+        </div>
+
+        <!-- Footer (Alt Bilgi) -->
+        <footer class="site-footer">
+            <div class="footer-content">
+                <div>
+                    <h4>İDE4 3D</h4>
+                    <p>Profesyonel Katmanlı Üretim Merkezine Hoş Geldiniz.</p>
+                </div>
+                <div>
+                    <h4>İletişim</h4>
+                    <ul>
+                        <li><i class="fab fa-whatsapp"></i> +90 (555) 743 06 09</li>
+                        <li><i class="fas fa-map-marker-alt"></i> Söke, Aydın / Türkiye</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">&copy; 2026 İDE4 3D Teknolojileri. Tüm hakları saklıdır.</div>
+        </footer>
+        
+    </main>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
