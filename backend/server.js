@@ -1,29 +1,32 @@
 const express = require('express');
-const mongoose = require('mongoose');
-const cors = require('cors');
-const path = require('path'); // EKLENDİ: Dizin yollarını çözümlemek için
-const apiRoutes = require('./routes/api');
-
+const path = require('path');
 const app = express();
-app.use(cors());
+const PORT = process.env.PORT || 3000;
+
+// Statik klasör yolunu sabit bir değişkene atama (Tam olarak projenizdeki 'docs' klasörü)
+const FRONTEND_PATH = path.join(__dirname, '..', 'docs');
+
+// JSON veri akışını işlemek için ara katman
 app.use(express.json());
 
-console.log('İDE4 3D PROJECT BACKEND')
-// EKLENDİ: Frontend klasörünü kök dizin olarak tanımlama ve statik yayınlama
-app.use(express.static(path.join(__dirname, '../frontend')));
+// 1. STATİK DOSYA SUNUMU: Tüm CSS, JS ve resim dosyalarını 'docs' klasöründen dışa açar
+app.use(express.static(FRONTEND_PATH));
 
-/* GECİCİ OLARAK İPTAL EDİLDİ (MongoDB entegrasyonu yapılana kadar)
-mongoose.connect('mongodb://127.0.0.1:27017/ide4_3d', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-}).then(() => console.log('MongoDB Bağlantısı Başarılı'))
-  .catch(err => console.error('MongoDB Bağlantı Hatası:', err));
-*/
+// 2. SAYFA YÖNLENDİRMELERİ
+app.get('/', (req, res) => {
+    res.sendFile(path.join(FRONTEND_PATH, 'index.html'));
+});
 
-app.use('/api', apiRoutes);
+app.get('/products', (req, res) => {
+    res.sendFile(path.join(FRONTEND_PATH, 'products.html'));
+});
 
-const PORT = 3000;
+app.get('/admin', (req, res) => {
+    res.sendFile(path.join(FRONTEND_PATH, 'admin.html'));
+});
+
+// 3. SUNUCUYU BAŞLATMA VE YOL TESTİ
 app.listen(PORT, () => {
-    console.log(`Sunucu ${PORT} portunda aktif.`);
-    console.log(`Sisteme erişim adresi: http://localhost:${PORT}`);
+    console.log(`[BAŞARILI] Sunucu çalışıyor: http://localhost:${PORT}`);
+    console.log(`[DİZİN ONAYI] Hedeflenen Frontend Yolu: ${FRONTEND_PATH}`);
 });

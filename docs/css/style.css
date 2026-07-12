@@ -10,6 +10,7 @@
     --border-color: #E2E8F0;
 }
 
+/* --- GLOBAL ESNEKLİK, TAŞMA KORUMASI VE TEMEL AYARLAR --- */
 * {
     box-sizing: border-box;
     margin: 0;
@@ -17,12 +18,32 @@
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
+html, body {
+    overflow-x: hidden; /* Yatay kaydırma çubuğunu kesinlikle engeller */
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    -webkit-text-size-adjust: 100%; /* iOS Safari'nin fontları istemsiz büyütmesini engeller */
+}
+
 body {
     background-color: var(--bg-color);
     color: var(--text-main);
     display: flex;
     min-height: 100vh;
-    overflow-x: hidden;
+}
+
+/* Görsel, Video ve Canvas Elemanlarını Ekran Genişliğine Sabitleme */
+img, video, svg, canvas {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Dokunmatik Ekran Hedefleri (Apple/Google Standartları: Min. 44x44px) */
+a, button, input, select, textarea, .btn, summary {
+    min-height: 44px;
+    touch-action: manipulation; /* Çift dokunmada oluşan 300ms yakınlaştırma gecikmesini kaldırır */
 }
 
 /* --- SAYFA BAZLI RESİMLİ ARKA PLANLAR --- */
@@ -283,14 +304,79 @@ details p { padding: 1.2rem; color: var(--text-main); border-top: 1px solid #E2E
 #cart-items li { display: flex; justify-content: space-between; align-items: center; padding: 0.8rem 0; border-bottom: 1px solid #E2E8F0; font-size: 0.95rem; }
 .total-container { margin: 1.5rem 0; text-align: right; color: var(--primary-blue); }
 
-/* --- RESPONSIVE TASARIM KURALLARI --- */
-@media (max-width: 992px) {
-    .sidebar { width: 100%; height: auto; position: relative; padding: 1rem; flex-direction: row; justify-content: space-between; align-items: center; }
-    .nav-logo { margin: 0; max-width: 110px; }
-    .nav-links { display: none; position: absolute; top: 100%; left: 0; width: 100%; background: var(--primary-blue); padding: 1rem; box-shadow: 0 10px 15px rgba(0,0,0,0.1); }
+/* ==========================================================================
+   RESPONSIVE (MOBİL VE TABLET UYUMLULUK) KURALLARI
+   ========================================================================== */
+
+/* 1. TABLET GEÇİŞİ (max-width: 992px)
+   Sol taraftaki sabit menü üst tarafa yatay bir navigasyon barı olarak taşınır. */
+@media screen and (max-width: 992px) {
+    body { flex-direction: column; }
+    .sidebar { width: 100%; height: auto; position: sticky; top: 0; padding: 1rem 1.5rem; flex-direction: row; justify-content: space-between; align-items: center; }
+    .nav-logo { margin: 0; max-width: 120px; }
+    .nav-links { display: none; position: absolute; top: 100%; left: 0; width: 100%; background: var(--primary-blue); padding: 1rem; box-shadow: 0 10px 15px rgba(0,0,0,0.15); }
     .nav-links.active { display: block; }
+    .nav-links li { margin-bottom: 0.5rem; }
     .hamburger { display: block; }
     .qr-container { display: none; }
-    .main-content { margin-left: 0; padding: 1.5rem; }
+    .main-content { margin-left: 0; padding: 2rem 1.5rem; width: 100%; }
     .about-content { grid-template-columns: 1fr; gap: 2rem; }
+}
+
+/* 2. STANDART AKILLI TELEFON OPTİMİZASYONU (max-width: 768px)
+   İçerik alanları, modallar ve yazılar küçük ekranlara göre dikey olarak yeniden ölçeklenir. */
+@media screen and (max-width: 768px) {
+    /* Ana Taşıyıcı ve İçerik Boşlukları */
+    .main-content { padding: 1rem; }
+    
+    /* Hero (Karşılama) Alanı */
+    .hero { padding: 3rem 1.5rem; border-radius: 12px; margin-bottom: 2rem; text-align: center; }
+    .hero h1 { font-size: 2rem; line-height: 1.2; }
+    .hero p { font-size: 1rem; }
+    
+    /* Bölüm Başlıkları ve Biz Kimiz Alanı */
+    .section-title { font-size: 1.4rem; margin-bottom: 1.5rem; }
+    .about-section { padding: 1.5rem; }
+    
+    /* Ürün Listeleme Grid Sistemi (Telefonda yan yana küçük kalmaması için tek kolona veya uyumlu 2 kolona düşer) */
+    .product-grid { grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1rem; }
+    .product-card { padding: 1rem; }
+    
+    /* Before / After Kalite Karşılaştırma Modülü */
+    .compare-container { height: 300px; }
+    .compare-slider::-webkit-slider-thumb { height: 300px; }
+    .compare-label { font-size: 0.75rem; top: 10px; padding: 4px 8px; }
+    
+    /* Modallar (Açılır pencereler ekranı tam kaplayacak şekilde esnetilir) */
+    .modal-content { width: 95%; padding: 1.5rem; max-height: 85vh; }
+    .modal-content h2 { font-size: 1.3rem; }
+    
+    /* SSS ve Footer */
+    .faq-section { padding: 1.5rem; }
+    .site-footer { padding: 2.5rem 1.5rem 1.5rem; margin-top: 2rem; }
+    .footer-content { grid-template-columns: 1fr; gap: 1.5rem; text-align: center; }
+    
+    /* iOS Tarayıcılarında Formlara Tıklayınca Otomatik Yakınlaştırmayı (Zoom) Önleme */
+    input[type="text"], input[type="number"], select, textarea {
+        font-size: 16px !important;
+        width: 100%;
+    }
+}
+
+/* 3. KÜÇÜK MOBİL EKRANLAR (max-width: 480px)
+   Çok dar telefon ekranları için butonlar ve filtrelerin dokunulabilirliği tam ekran yayılır. */
+@media screen and (max-width: 480px) {
+    .hero h1 { font-size: 1.75rem; }
+    .product-grid { grid-template-columns: 1fr; } /* Telefonda ürünler alt alta tek ve büyük bir kart olarak listelenir */
+    
+    /* Butonlar parmakla basmayı kolaylaştırmak için tam ekran genişliğine yayılır */
+    .btn-primary, .btn-secondary, .filter-btn {
+        width: 100%;
+        margin-bottom: 0.5rem;
+        padding: 0.9rem 1rem;
+    }
+    
+    .filter-container { gap: 0.5rem; }
+    .compare-container { height: 250px; }
+    .compare-slider::-webkit-slider-thumb { height: 250px; }
 }
